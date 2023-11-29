@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noisy Shapes</title>
+  <style type="text/css">
+    body {
+      background-color: hsl(25, 35%, 93%);
+      margin: 0;
+    }
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100dvh;
+    }
+    svg.shape {
+      max-width: 80dvh;
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0">
+    <defs>
+      <filter id="noise">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="19.5"
+          numOctaves="10"
+          result="turbulence"
+        />
+        <feComposite operator="in" in="turbulence" in2="SourceAlpha" result="composite"/>
+        <feColorMatrix in="composite" type="luminanceToAlpha" />
+        <feBlend in="SourceGraphic" in2="composite" mode="color-burn" />
+      </filter>
+      <mask id="shape-mask-left">
+        <linearGradient id="fade-gradient" gradientTransform="rotate(0)">
+          <stop offset="0%" stop-color="black" stop-opacity="0.5" />
+          <stop offset="65%" stop-color="white" stop-opacity="0.9" />
+          <stop offset="75%" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+        <use href="#circle" fill="url('#fade-gradient')"  />
+      </mask>
+      <mask id="shape-mask-up">
+        <linearGradient id="fade-gradient-up" gradientTransform="rotate(90)">
+          <stop offset="0%" stop-color="black" stop-opacity="0.5" />
+          <stop offset="65%" stop-color="white" stop-opacity="0.9" />
+          <stop offset="75%" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+        <use href="#circle" fill="url('#fade-gradient-up')"  />
+      </mask>
+      <mask id="shape-mask-down">
+        <linearGradient id="fade-gradient-down" gradientTransform="skewY(30) rotate(30)">
+          <stop offset="0%" stop-color="black" stop-opacity="0.5" />
+          <stop offset="65%" stop-color="white" stop-opacity="0.9" />
+          <stop offset="75%" stop-color="white" stop-opacity="1" />
+        </linearGradient>
+        <use href="#circle" fill="url('#fade-gradient-down')"  />
+      </mask>
+      <ellipse id="circle" cx="50" cy="50" rx="50" ry="50" />
+    </defs>
+  </svg>
+  <main>
+    <svg class="shape" viewbox="0 0 200 175">
+      <use href="#circle" fill="hsl(20, 92%, 64%)" x="100" y="75" mask="url(#shape-mask-up)" filter="url('#noise')" />
+      <use href="#circle" fill="hsl(337, 92%, 69%)" x="0" y="0" mask="url(#shape-mask-down)" filter="url('#noise')" />
+      <use href="#circle" fill="hsl(269, 65%, 52%)" x="50" y="35" mask="url(#shape-mask-left)" filter="url('#noise')" />
+    </svg>
+    <!-- <svg viewbox="0 0 100 100" class="center">
+      <use href="#shape" fill="hsl(269, 65%, 52%)" mask="url(#shape-mask)" filter="url('#noise')" opacity=".9" />
+    </svg> -->
+  </main>
+</body>
+</html>
