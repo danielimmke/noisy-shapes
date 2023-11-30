@@ -17,11 +17,12 @@
     }
     svg.shape {
       max-width: 80dvh;
+      width: 100%; /* Needed for Safari */
     }
   </style>
 </head>
 <body>
-  <svg width="0" height="0">
+  <svg width="0" height="0" style="display: block;">
     <defs>
       <filter id="noise">
         <feTurbulence
@@ -43,7 +44,7 @@
         <use href="#circle" fill="url('#fade-gradient')"  />
       </mask>
       <mask id="shape-mask-up">
-        <linearGradient id="fade-gradient-up" gradientTransform="rotate(90)">
+        <linearGradient id="fade-gradient-up" gradientTransform="skewX(30) rotate(100)">
           <stop offset="0%" stop-color="black" stop-opacity="0.5" />
           <stop offset="65%" stop-color="white" stop-opacity="0.9" />
           <stop offset="75%" stop-color="white" stop-opacity="1" />
@@ -63,9 +64,9 @@
   </svg>
   <main>
     <svg class="shape" viewbox="0 0 200 175">
-      <use href="#circle" fill="hsl(20, 92%, 64%)" x="100" y="75" mask="url(#shape-mask-up)" filter="url('#noise')" />
       <use href="#circle" fill="hsl(337, 92%, 69%)" x="0" y="0" mask="url(#shape-mask-down)" filter="url('#noise')" />
       <use href="#circle" fill="hsl(269, 65%, 52%)" x="50" y="35" mask="url(#shape-mask-left)" filter="url('#noise')" />
+      <use href="#circle" fill="hsl(20, 92%, 64%)" x="100" y="75" mask="url(#shape-mask-up)" filter="url('#noise')" />
     </svg>
     <!-- <svg viewbox="0 0 100 100" class="center">
       <use href="#shape" fill="hsl(269, 65%, 52%)" mask="url(#shape-mask)" filter="url('#noise')" opacity=".9" />
